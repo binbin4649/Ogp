@@ -1,0 +1,6 @@
+OGP : baserCMS Plugin
+(c) dubmilli LLC.  <https://dubmilli.com/>
+
+About License
+Licensed under the MIT License
+http://opensource.org/licenses/mit-license.php
