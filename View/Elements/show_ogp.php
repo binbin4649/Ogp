@@ -14,9 +14,13 @@
 		if(!empty($post['BlogPost']['eye_catch'])){
 			$uri = $this->Blog->getEyeCatch($post, array('link' => false, 'imgsize'=>'large', 'class'=>null, 'output'=>'url'));
 			$image_uri = $this->BcBaser->getUri($uri);
-			$image_info = getimagesize($image_uri);
-			$image_width = $image_info[0];
-			$image_height = $image_info[1];
+			if(file_exists($image_uri)){
+				$image_info = getimagesize($image_uri);
+				$image_width = $image_info[0];
+				$image_height = $image_info[1];
+			}else{
+				$image_uri = false;
+			}
 		}
 	}else{
 		$title = $content['title'].' | '.$siteName;
@@ -24,9 +28,13 @@
 		if(!empty($content['eyecatch'])){
 			$uri = $this->BcUpload->uploadImage('Content.eyecatch', $content['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
 			$image_uri = $this->BcBaser->getUri($uri);
-			$image_info = getimagesize($image_uri);
-			$image_width = $image_info[0];
-			$image_height = $image_info[1];
+			if(file_exists($image_uri)){
+				$image_info = getimagesize($image_uri);
+				$image_width = $image_info[0];
+				$image_height = $image_info[1];
+			}else{
+				$image_uri = false;
+			}
 		}
 	}
 	
