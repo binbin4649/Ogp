@@ -23,7 +23,11 @@
 			}
 		}
 	}else{
-		$title = $content['title'].' | '.$siteName;
+		if($this->BcBaser->isHome()){
+			$title = $siteName;
+		}else{
+			$title = $content['title'].' | '.$siteName;
+		}
 		$description = $content['description'];
 		if(!empty($content['eyecatch'])){
 			$uri = $this->BcUpload->uploadImage('Content.eyecatch', $content['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
