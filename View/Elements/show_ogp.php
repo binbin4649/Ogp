@@ -14,7 +14,8 @@
 		if(!empty($post['BlogPost']['eye_catch'])){
 			$uri = $this->Blog->getEyeCatch($post, array('link' => false, 'imgsize'=>'large', 'class'=>null, 'output'=>'url'));
 			$image_uri = $this->BcBaser->getUri($uri);
-			if(file_exists($image_uri)){
+			$response = @file_get_contents($image_uri, NULL, NULL, 0, 1);
+			if($response !== false){
 				$image_info = getimagesize($image_uri);
 				$image_width = $image_info[0];
 				$image_height = $image_info[1];
@@ -32,7 +33,8 @@
 		if(!empty($content['eyecatch'])){
 			$uri = $this->BcUpload->uploadImage('Content.eyecatch', $content['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
 			$image_uri = $this->BcBaser->getUri($uri);
-			if(file_exists($image_uri)){
+			$response = @file_get_contents($image_uri, NULL, NULL, 0, 1);
+			if($response !== false){
 				$image_info = getimagesize($image_uri);
 				$image_width = $image_info[0];
 				$image_height = $image_info[1];
