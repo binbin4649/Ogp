@@ -13,10 +13,12 @@
 		$description = $this->Blog->getTitle() . '｜' . $this->Blog->getPostContent($post, false, false, 50);
 		if(!empty($post['BlogPost']['eye_catch'])){
 			$uri = $this->Blog->getEyeCatch($post, array('link' => false, 'imgsize'=>'large', 'class'=>null, 'output'=>'url'));
+			$uri = strtok( $uri, '?');
 			$image_uri = $this->BcBaser->getUri($uri);
-			$response = @file_get_contents($image_uri, NULL, NULL, 0, 1);
-			if($response !== false){
-				$image_info = getimagesize($image_uri);
+			$root_uri = WWW_ROOT.$uri;
+			$root_uri = str_replace('//', '/', $root_uri);
+			if(file_exists($root_uri)){
+				$image_info = getimagesize($root_uri);
 				$image_width = $image_info[0];
 				$image_height = $image_info[1];
 			}else{
@@ -32,10 +34,12 @@
 		$description = $content['description'];
 		if(!empty($content['eyecatch'])){
 			$uri = $this->BcUpload->uploadImage('Content.eyecatch', $content['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
+			$uri = strtok( $uri, '?');
 			$image_uri = $this->BcBaser->getUri($uri);
-			$response = @file_get_contents($image_uri, NULL, NULL, 0, 1);
-			if($response !== false){
-				$image_info = getimagesize($image_uri);
+			$root_uri = WWW_ROOT.$uri;
+			$root_uri = str_replace('//', '/', $root_uri);
+			if(file_exists($root_uri)){
+				$image_info = getimagesize($root_uri);
 				$image_width = $image_info[0];
 				$image_height = $image_info[1];
 			}else{
@@ -48,9 +52,10 @@
 	if(empty($image_uri)){
 		$uri = $this->BcBaser->getThemeUrl().'img/logo.png';
 		$image_uri = $this->BcBaser->getUri($uri);
-		$response = @file_get_contents($image_uri, NULL, NULL, 0, 1);
-		if($response !== false){
-			$image_info = getimagesize($image_uri);
+		$root_uri = WWW_ROOT.$uri;
+		$root_uri = str_replace('//', '/', $root_uri);
+		if(file_exists($root_uri)){
+			$image_info = getimagesize($root_uri);
 			$image_width = $image_info[0];
 			$image_height = $image_info[1];
 		}else{
