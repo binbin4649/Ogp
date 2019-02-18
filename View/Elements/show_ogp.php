@@ -44,11 +44,26 @@
 		}
 	}
 	
+	//アイキャッチがない場合はロゴを出力
+	if(empty($image_uri)){
+		$uri = $this->BcBaser->getThemeUrl().'img/logo.png';
+		$image_uri = $this->BcBaser->getUri($uri);
+		$response = @file_get_contents($image_uri, NULL, NULL, 0, 1);
+		if($response !== false){
+			$image_info = getimagesize($image_uri);
+			$image_width = $image_info[0];
+			$image_height = $image_info[1];
+		}else{
+			$image_uri = false;
+		}
+	}
+	
 	if($this->BcBaser->isHome()){
 		$type = 'website';
 	}else{
 		$type = 'article';
 	}
+	
 ?>
 <meta property="og:title" content="<?php echo $title; ?>" />
 <meta property="og:type" content="<?php echo $type; ?>" />
@@ -61,6 +76,7 @@
 <?php endif; ?>
 <meta property="og:site_name" content="<?php echo $siteName; ?>" />
 <meta property="og:locale" content="ja_JP" />
+<meta property="og:locale:alternate" content="en_US" />
 <?php if($twitter_id): ?>
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="@<?php echo $twitter_id; ?>">
