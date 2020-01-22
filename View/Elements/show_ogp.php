@@ -2,6 +2,7 @@
 	$siteName = $this->BcBaser->getSiteName();
 	$content = $this->BcBaser->getCurrentContent();
 	$twitter_id = Configure::read('OGP.twitter_id');
+	$twitter_card = Configure::read('OGP.twitter_card');
 	$facebook_app_id = Configure::read('OGP.facebook_app_id');
 	
 	$image_width = $image_height = $image_uri = '';
@@ -83,7 +84,11 @@
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:locale:alternate" content="en_US" />
 <?php if($twitter_id): ?>
-	<meta name="twitter:card" content="summary">
+	<?php if($twitter_card): ?>
+		<meta name="twitter:card" content="<?php echo $twitter_card; ?>">
+	<?php else: ?>
+		<meta name="twitter:card" content="summary">
+	<?php endif; ?>
 	<meta name="twitter:site" content="@<?php echo $twitter_id; ?>">
 <?php endif; ?>
 <?php if($facebook_app_id): ?>
