@@ -4,6 +4,7 @@
 	$twitter_id = Configure::read('OGP.twitter_id');
 	$twitter_card = Configure::read('OGP.twitter_card');
 	$facebook_app_id = Configure::read('OGP.facebook_app_id');
+	$default_image = Configure::read('OGP.default_image');
 	
 	$image_width = $image_height = $image_uri = '';
 	$url = $this->BcBaser->getUri($this->BcBaser->getHere());
@@ -49,9 +50,12 @@
 		}
 	}
 	
-	//アイキャッチがない場合はロゴを出力
+	//アイキャッチがない場合、webroot/img にデフォルトイメージがあるか？
 	if(empty($image_uri)){
-		$uri = $this->BcBaser->getThemeUrl().'img/logo.png';
+		$uri = '/img/'.$default_image;
+		$image_info = $this->Ogp->ogpImageInfo($uri);
+		extract($image_info);
+/*
 		$image_uri = $this->BcBaser->getUri($uri);
 		$root_uri = WWW_ROOT.$uri;
 		$root_uri = str_replace('//', '/', $root_uri);
@@ -62,6 +66,21 @@
 		}else{
 			$image_uri = false;
 		}
+*/
+	}
+	
+	// テーマ内にデフォルトイメージがあるか？
+	if(empty($image_uri)){
+		$uri = $this->BcBaser->getThemeUrl().'img/'.$default_image;
+		$image_info = $this->Ogp->ogpImageInfo($uri);
+		extract($image_info);
+	}
+	
+	// それでもなければロゴ出す
+	if(empty($image_uri)){
+		$uri = $this->BcBaser->getThemeUrl().'img/logo.png';
+		$image_info = $this->Ogp->ogpImageInfo($uri);
+		extract($image_info);
 	}
 	
 	if($this->BcBaser->isHome()){
@@ -69,6 +88,8 @@
 	}else{
 		$type = 'article';
 	}
+	
+	
 	
 ?>
 <meta property="og:title" content="<?php echo $title; ?>" />

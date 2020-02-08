@@ -20,12 +20,14 @@ class OgpController extends AppController {
 	  $data['OGP']['twitter_id'] = Configure::read('OGP.twitter_id');
 	  $data['OGP']['twitter_card'] = Configure::read('OGP.twitter_card');
 	  $data['OGP']['facebook_app_id'] = Configure::read('OGP.facebook_app_id');
+	  $data['OGP']['default_image'] = Configure::read('OGP.default_image');
 	  if ($this->data) {
 		  if ($writableInstall) {
 			  $data = $this->data;
 			  $this->BcManager->setInstallSetting('OGP.twitter_id', "'" . $data['OGP']['twitter_id'] . "'");
 			  $this->BcManager->setInstallSetting('OGP.twitter_card', "'" . $data['OGP']['twitter_card'] . "'");
 			  $this->BcManager->setInstallSetting('OGP.facebook_app_id', "'" . $data['OGP']['facebook_app_id'] . "'");
+			  $this->BcManager->setInstallSetting('OGP.default_image', "'" . $data['OGP']['default_image'] . "'");
 			  $this->setMessage('OGP設定を保存しました。');
 		  }
 	  }
