@@ -23,7 +23,7 @@
   </tr>
   <tr>
     <th>Twitter Card</th>
-	<td><?php echo $this->bcForm->input('OGP.twitter_card', array('type'=>'select', 'options'=>$twitter_cards)) ?></td>
+	<td><?php echo $this->bcForm->input('OGP.twitter_card', array('type'=>'select', 'options'=>$twitter_cards, 'value'=>$OGP['OGP']['twitter_card'])) ?></td>
   </tr>
   <tr>
     <th>facebook App-ID</th>
@@ -33,6 +33,15 @@
     <th>Default Image</th>
 	<td><?php echo $this->bcForm->input('OGP.default_image', array('type'=>'text', 'value'=>$OGP['OGP']['default_image'])) ?></td>
   </tr>
+  <tr>
+    <th>locale</th>
+	<td><?php echo $this->bcForm->input('OGP.locale', array('type'=>'text', 'value'=>$OGP['OGP']['locale'])) ?></td>
+  </tr>
+  <tr>
+    <th>locale_alternate</th>
+	<td><?php echo $this->bcForm->input('OGP.locale_alternate', array('type'=>'text', 'value'=>$OGP['OGP']['locale_alternate'])) ?></td>
+  </tr>
+  
 </table>
 <div class="submit">
   <?php echo $this->bcForm->submit('保存', array('class' => 'button')) ?>

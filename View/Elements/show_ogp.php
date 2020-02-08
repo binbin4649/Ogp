@@ -5,6 +5,8 @@
 	$twitter_card = Configure::read('OGP.twitter_card');
 	$facebook_app_id = Configure::read('OGP.facebook_app_id');
 	$default_image = Configure::read('OGP.default_image');
+	$locale = Configure::read('OGP.locale');
+	$locale_alternate = Configure::read('OGP.locale_alternate');
 	
 	$image_width = $image_height = $image_uri = '';
 	$url = $this->BcBaser->getUri($this->BcBaser->getHere());
@@ -16,16 +18,8 @@
 		if(!empty($post['BlogPost']['eye_catch'])){
 			$uri = $this->Blog->getEyeCatch($post, array('link' => false, 'imgsize'=>'large', 'class'=>null, 'output'=>'url'));
 			$uri = strtok( $uri, '?');
-			$image_uri = $this->BcBaser->getUri($uri);
-			$root_uri = WWW_ROOT.$uri;
-			$root_uri = str_replace('//', '/', $root_uri);
-			if(file_exists($root_uri)){
-				$image_info = getimagesize($root_uri);
-				$image_width = $image_info[0];
-				$image_height = $image_info[1];
-			}else{
-				$image_uri = false;
-			}
+			$image_info = $this->Ogp->ogpImageInfo($uri);
+			extract($image_info);
 		}
 	}else{
 		if($this->BcBaser->isHome()){
@@ -37,16 +31,8 @@
 		if(!empty($content['eyecatch'])){
 			$uri = $this->BcUpload->uploadImage('Content.eyecatch', $content['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
 			$uri = strtok( $uri, '?');
-			$image_uri = $this->BcBaser->getUri($uri);
-			$root_uri = WWW_ROOT.$uri;
-			$root_uri = str_replace('//', '/', $root_uri);
-			if(file_exists($root_uri)){
-				$image_info = getimagesize($root_uri);
-				$image_width = $image_info[0];
-				$image_height = $image_info[1];
-			}else{
-				$image_uri = false;
-			}
+			$image_info = $this->Ogp->ogpImageInfo($uri);
+			extract($image_info);
 		}
 	}
 	
@@ -55,18 +41,6 @@
 		$uri = '/img/'.$default_image;
 		$image_info = $this->Ogp->ogpImageInfo($uri);
 		extract($image_info);
-/*
-		$image_uri = $this->BcBaser->getUri($uri);
-		$root_uri = WWW_ROOT.$uri;
-		$root_uri = str_replace('//', '/', $root_uri);
-		if(file_exists($root_uri)){
-			$image_info = getimagesize($root_uri);
-			$image_width = $image_info[0];
-			$image_height = $image_info[1];
-		}else{
-			$image_uri = false;
-		}
-*/
 	}
 	
 	// テーマ内にデフォルトイメージがあるか？
@@ -89,8 +63,6 @@
 		$type = 'article';
 	}
 	
-	
-	
 ?>
 <meta property="og:title" content="<?php echo $title; ?>" />
 <meta property="og:type" content="<?php echo $type; ?>" />
@@ -102,8 +74,16 @@
 	<meta property="og:image:height" content="<?php echo $image_height; ?>"/>
 <?php endif; ?>
 <meta property="og:site_name" content="<?php echo $siteName; ?>" />
-<meta property="og:locale" content="ja_JP" />
-<meta property="og:locale:alternate" content="en_US" />
+<?php if($locale): ?>
+	<meta property="og:locale" content="<?php echo $locale; ?>" />
+<?php else: ?>
+	<meta property="og:locale" content="ja_JP" />
+<?php endif; ?>
+<?php if($locale_alternate): ?>
+	<meta property="og:locale:alternate" content="<?php echo $locale_alternate; ?>" />
+<?php else: ?>
+	<meta property="og:locale:alternate" content="en_US" />
+<?php endif; ?>
 <?php if($twitter_id): ?>
 	<?php if($twitter_card): ?>
 		<meta name="twitter:card" content="<?php echo $twitter_card; ?>">

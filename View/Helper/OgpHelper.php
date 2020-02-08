@@ -12,7 +12,7 @@ class OgpHelper extends AppHelper {
 		$image_uri = $this->BcBaser->getUri($uri);
 		$root_uri = WWW_ROOT.$uri;
 		$root_uri = str_replace('//', '/', $root_uri);
-		if(file_exists($root_uri)){
+		if(is_file($root_uri)){
 			$image_info = getimagesize($root_uri);
 			$image_width = $image_info[0];
 			$image_height = $image_info[1];
