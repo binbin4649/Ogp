@@ -1,4 +1,6 @@
 <?php
+// vsesion 1.0.0 から、使ってない
+
 App::uses('AppController', 'Controller');
 
 class OgpController extends AppController {
