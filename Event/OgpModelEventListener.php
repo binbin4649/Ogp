@@ -4,10 +4,20 @@ class OgpModelEventListener extends BcModelEventListener {
 	
 	public $events = array(
         'Blog.BlogPost.afterSave',
+        'Blog.BlogPost.beforeSave',
         'Blog.BlogPost.beforeFind',
         'Page.afterSave',
+        'Page.beforeSave',
         'Page.beforeFind'
     );
+    
+    public function blogBlogPostBeforeSave(CakeEvent $event) {
+	    $BlogPost = $event->subject();
+		$data = $BlogPost->data;
+	    $Ogp = ClassRegistry::init('Ogp.Ogp');
+		$Ogp->set($data['Ogp']);
+		return $Ogp->validates();
+    }
     
     public function blogBlogPostAfterSave(CakeEvent $event) {
         $BlogPost = $event->subject();
@@ -21,9 +31,16 @@ class OgpModelEventListener extends BcModelEventListener {
          ){
 	        $data['Ogp']['blog_post_id'] = $data['BlogPost']['id'];
 	        $Ogp = ClassRegistry::init('Ogp.Ogp');
-	        $Ogp->save($data['Ogp']);
-	        return true;
+	        return $Ogp->save($data['Ogp']);
         }
+    }
+    
+    public function pageBeforeSave(CakeEvent $event) {
+	    $Page = $event->subject();
+		$data = $Page->data;
+	    $Ogp = ClassRegistry::init('Ogp.Ogp');
+		$Ogp->set($data['Ogp']);
+		return $Ogp->validates();
     }
     
     public function pageAfterSave(CakeEvent $event){
@@ -37,8 +54,7 @@ class OgpModelEventListener extends BcModelEventListener {
          ){
 	        $data['Ogp']['page_id'] = $data['Page']['id'];
 	        $Ogp = ClassRegistry::init('Ogp.Ogp');
-	        $Ogp->save($data['Ogp']);
-	        return true;
+	        return $Ogp->save($data['Ogp']);
         }
     }
     

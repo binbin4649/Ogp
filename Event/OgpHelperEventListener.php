@@ -16,17 +16,20 @@ class OgpHelperEventListener extends BcHelperEventListener {
 			'title' => 'OGPタイトル',
 			'input' => 
 				$View->BcForm->input('Ogp.id', array('type' => 'hidden')).
-				$View->BcForm->input('Ogp.title', array('type' => 'text', 'size'=>'80'))
+				$View->BcForm->input('Ogp.title', array('type' => 'text', 'size'=>'70')).
+				$View->BcForm->error('Ogp.title')
 		];
 		$add_description = [
 			'title' => 'OGP詳細',
 			'input' => 
-				$View->BcForm->input('Ogp.description', array('type' => 'text', 'size'=>'80'))
+				$View->BcForm->input('Ogp.description', array('type' => 'text', 'size'=>'80')).
+				$View->BcForm->error('Ogp.description')
 		];
 		$add_image = [
 			'title' => 'OGPイメージ',
 			'input' => 
-				$View->BcForm->input('Ogp.image', array('type' => 'text', 'placeholder'=>'full url', 'size'=>'80'))
+				$View->BcForm->input('Ogp.image', array('type' => 'text', 'placeholder'=>'full url', 'size'=>'70')).
+				$View->BcForm->error('Ogp.image')
 		];
 		
 		if($event->data['id'] == 'BlogPostForm' && $add_blog == '1') {//ブログ
