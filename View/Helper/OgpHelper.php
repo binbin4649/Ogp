@@ -1,7 +1,7 @@
 <?php
 
 class OgpHelper extends AppHelper {
-	public $helpers = array('BcBaser', 'BcHtml', 'Blog');
+	public $helpers = array('BcBaser', 'BcHtml', 'Blog', 'BcUpload');
 	
 	public function showOgp(){
 		$this->BcBaser->element('Ogp.show_ogp', array('plugin' => 'Ogp'));
