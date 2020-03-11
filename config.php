@@ -11,4 +11,4 @@ $title = 'OGPプラグイン';
 $description = 'OGPタグを出力するプラグイン。イメージはアイキャッチ画像を使用。';
 $author = 'dubmilli';
 $url = 'https://dubmilli.com/';
-$adminLink = '/admin/ogp/ogp/';
+$adminLink = '/admin/ogp/ogp_configs/';

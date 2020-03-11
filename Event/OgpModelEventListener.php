@@ -22,6 +22,8 @@ class OgpModelEventListener extends BcModelEventListener {
     public function blogBlogPostAfterSave(CakeEvent $event) {
         $BlogPost = $event->subject();
         $data = $BlogPost->data;
+        
+        //$blog_post_id = $BlogPost->find('first', ['conditions'=>['BlogPost.no'=>'4']]);
         // 入力があれば保存する
         if(
         	!empty($data['Ogp']['id']) ||

@@ -1,14 +1,11 @@
 <?php
-// vsesion 1.0.0 から、使ってない
 
-App::uses('AppController', 'Controller');
-
-class OgpController extends AppController {
+class OgpsController extends OgpAppController {
   
-  public $name = 'Ogp';
+  public $name = 'Ogps';
   
-  public $uses = array();
-  public $ogp = null;
+  public $uses = array('Ogp.Ogp');
+  //public $ogp = null;
   
   public $components = array('BcAuth', 'Cookie', 'BcAuthConfigure', 'BcManager');
   

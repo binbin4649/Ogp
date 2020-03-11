@@ -1,8 +1,10 @@
 <?php
-App::import('Model', 'AppModel');
+App::uses('OgpAppModel', 'Ogp.Model');
 
-class OgpConfig extends AppModel {
+class OgpConfig extends OgpAppModel {
 	
 	public $name = 'OgpConfig';
+	
+	public $connection = 'plugin';
 	
 }

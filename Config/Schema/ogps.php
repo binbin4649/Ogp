@@ -1,7 +1,11 @@
 <?php 
 class OgpsSchema extends CakeSchema {
 
+	public $name = 'Ogps';
+	
 	public $file = 'ogps.php';
+	
+	public $connection = 'plugin';
 
 	public function before($event = array()) {
 		return true;

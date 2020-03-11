@@ -1,13 +1,12 @@
 <?php
-App::uses('AppController', 'Controller');
 
-class OgpConfigsController extends AppController {
+class OgpConfigsController extends OgpAppController {
   
   public $name = 'OgpConfigs';
   
   //public $uses = array();
   //public $ogp_configs = null;
-  public $uses = array('Plugin', 'Ogp.OgpConfig');
+  public $uses = array('Ogp.OgpConfig');
   
   public $components = array('BcAuth', 'Cookie', 'BcAuthConfigure', 'BcManager');
   

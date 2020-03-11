@@ -8,9 +8,15 @@ class OgpHelperEventListener extends BcHelperEventListener {
 	
 	public function formAfterForm(CakeEvent $event) {
 		$View = $event->subject();
-		$OgpConfig = ClassRegistry::init('OgpConfig');
-		$add_blog = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_blog']])['OgpConfig']['value'];
-		$add_content = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_content']])['OgpConfig']['value'];
+		$OgpConfig = ClassRegistry::init('Ogp.OgpConfig');
+		
+		if(!empty($OgpConfig)){
+			$add_blog = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_blog']])['OgpConfig']['value'];
+			$add_content = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_content']])['OgpConfig']['value'];
+		}else{
+			$add_blog = '';
+			$add_content = '';
+		}
 		
 		$add_title = [
 			'title' => 'OGPタイトル',
@@ -37,7 +43,7 @@ class OgpHelperEventListener extends BcHelperEventListener {
 			$event->data['fields'][] = $add_description;
 			$event->data['fields'][] = $add_image;
 		}
-		if($event->data['id'] == 'PageAdminEditForm' && $add_content == '1') {//固定ページ
+		if($event->data['id'] == 'PageForm' && $add_content == '1') {//固定ページ
 			$event->data['fields'][] = $add_title;
 			$event->data['fields'][] = $add_description;
 			$event->data['fields'][] = $add_image;

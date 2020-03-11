@@ -1,9 +1,11 @@
 <?php
-App::import('Model', 'AppModel');
+App::uses('OgpAppModel', 'Ogp.Model');
 
-class Ogp extends AppModel {
+class Ogp extends OgpAppModel {
 	
 	public $name = 'Ogp';
+	
+	public $connection = 'plugin';
 	
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);

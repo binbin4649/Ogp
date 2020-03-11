@@ -4,7 +4,6 @@
 	
 	$image_width = $image_height = $image_uri = '';
 	$url = $this->BcBaser->getUri($this->BcBaser->getHere());
-	
 	if($this->BcBaser->isBlog() && !empty($post)){
 		$ogp_blog = $this->Ogp->ogpBlog($post);
 		extract($ogp_blog);
@@ -39,12 +38,12 @@
 <?php else: ?>
 	<meta property="og:locale:alternate" content="en_US" />
 <?php endif; ?>
+<?php if($twitter_card): ?>
+	<meta name="twitter:card" content="<?php echo $twitter_card; ?>">
+<?php else: ?>
+	<meta name="twitter:card" content="summary">
+<?php endif; ?>
 <?php if($twitter_id): ?>
-	<?php if($twitter_card): ?>
-		<meta name="twitter:card" content="<?php echo $twitter_card; ?>">
-	<?php else: ?>
-		<meta name="twitter:card" content="summary">
-	<?php endif; ?>
 	<meta name="twitter:site" content="@<?php echo $twitter_id; ?>">
 <?php endif; ?>
 <?php if($facebook_app_id): ?>

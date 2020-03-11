@@ -1,7 +1,11 @@
 <?php 
 class OgpConfigsSchema extends CakeSchema {
-
+	
+	public $name = 'OgpConfigs';
+	
 	public $file = 'ogp_configs.php';
+	
+	public $connection = 'plugin';
 
 	public function before($event = array()) {
 		return true;

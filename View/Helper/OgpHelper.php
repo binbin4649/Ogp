@@ -48,7 +48,7 @@ class OgpHelper extends AppHelper {
 	}
 	
 	public function ogpInfo(){
-		$OgpConfig = ClassRegistry::init('OgpConfig');
+		$OgpConfig = ClassRegistry::init('Ogp.OgpConfig');
 		$configs = $OgpConfig->find('all');
 		foreach($configs as $config){
 			$return[$config['OgpConfig']['name']] = $config['OgpConfig']['value'];
@@ -80,7 +80,7 @@ class OgpHelper extends AppHelper {
 	public function ogpBlog($post){
 		$title = $description = $uri = $image_info = '';
 		$siteName = $this->BcBaser->getSiteName();
-		$Ogp = ClassRegistry::init('Ogp');
+		$Ogp = ClassRegistry::init('Ogp.Ogp');
 		$current_ogp = $Ogp->find('first', ['conditions'=>['Ogp.blog_post_id'=>$post['BlogPost']['id']]]);
 		if($current_ogp){
 			$title = $current_ogp['Ogp']['title'];
@@ -91,13 +91,14 @@ class OgpHelper extends AppHelper {
 			$title = $this->Blog->getPostTitle($post, false).' | '.$siteName;
 		}
 		if(empty($description)){
-			$description = $this->Blog->getTitle() . '｜' . $this->Blog->getPostContent($post, false, false, 50);
+			$description = $this->Blog->getTitle() . '｜' . $this->Blog->getPostContent($post, true, false, 50);
 		}
 		if(empty($image_info['image_uri'])){
 			if(!empty($post['BlogPost']['eye_catch'])){
 				$uri = $this->Blog->getEyeCatch($post, array('link' => false, 'imgsize'=>'large', 'class'=>null, 'output'=>'url'));
 				$uri = strtok( $uri, '?');
-				$image_info = $this->ogpImageInfo($uri);
+				$image_uri = $this->BcBaser->getUri($uri);
+				$image_info = $this->ogpImageInfoFullUrl($image_uri);
 			}else{
 				$image_info = $this->defaultImage();
 			}
@@ -118,9 +119,9 @@ class OgpHelper extends AppHelper {
 	public function ogpPage(){
 		$title = $description = $uri = $image_info = '';
 		$siteName = $this->BcBaser->getSiteName();
-		$content = $this->BcBaser->getCurrentContent();
-		$Ogp = ClassRegistry::init('Ogp');
-		$current_ogp = $Ogp->find('first', ['conditions'=>['Ogp.page_id'=>$content['entity_id']]]);
+		$page = $this->request->data['Page'];
+		$Ogp = ClassRegistry::init('Ogp.Ogp');
+		$current_ogp = $Ogp->find('first', ['conditions'=>['Ogp.page_id'=>$page['id']]]);
 		if($current_ogp){
 			$title = $current_ogp['Ogp']['title'];
 			$description = $current_ogp['Ogp']['description'];
@@ -130,15 +131,15 @@ class OgpHelper extends AppHelper {
 			if($this->BcBaser->isHome()){
 				$title = $siteName;
 			}else{
-				$title = $content['title'].' | '.$siteName;
+				$title = $page['title'].' | '.$siteName;
 			}
 		}
 		if(empty($description)){
-			$description = $content['description'];
+			$description = $page['description'];
 		}
 		if(empty($image_info['image_uri'])){
-			if(!empty($content['eyecatch'])){
-				$uri = $this->BcUpload->uploadImage('Content.eyecatch', $content['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
+			if(!empty($page['eyecatch'])){
+				$uri = $this->BcUpload->uploadImage('Content.eyecatch', $page['eyecatch'], array('imgsize'=>'large', 'link'=>false, 'output'=>'url'));
 				$uri = strtok( $uri, '?');
 				$image_info = $this->ogpImageInfo($uri);
 			}else{
