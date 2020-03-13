@@ -50,8 +50,17 @@ class OgpHelper extends AppHelper {
 	public function ogpInfo(){
 		$OgpConfig = ClassRegistry::init('OgpConfig');
 		$configs = $OgpConfig->find('all');
+		$return = [];
 		foreach($configs as $config){
 			$return[$config['OgpConfig']['name']] = $config['OgpConfig']['value'];
+		}
+		if(empty($return)){
+			$return = [
+				'locale' => '',
+				'locale_alternate' => '',
+				'twitter_id' => '',
+				'facebook_app_id' => '',
+			];
 		}
 		return $return;
 	}
