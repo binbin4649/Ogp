@@ -17,7 +17,23 @@ class OgpConfigsSchema extends CakeSchema {
 			['OgpConfig' => [
 				'name' => 'add_content',
 				'value' => '0'
-			]]
+			]],
+			['OgpConfig' => [
+				'name' => 'locale',
+				'value' => ''
+			]],
+			['OgpConfig' => [
+				'name' => 'locale_alternate',
+				'value' => ''
+			]],
+			['OgpConfig' => [
+				'name' => 'twitter_id',
+				'value' => ''
+			]],
+			['OgpConfig' => [
+				'name' => 'facebook_app_id',
+				'value' => ''
+			]],
 		];
 		$OgpConfig->saveAll($first_data);
 	}
