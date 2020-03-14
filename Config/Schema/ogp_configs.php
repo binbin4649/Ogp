@@ -8,6 +8,18 @@ class OgpConfigsSchema extends CakeSchema {
 	}
 
 	public function after($event = array()) {
+		$OgpConfig = ClassRegistry::init('OgpConfig');
+		$first_data = [
+			['OgpConfig' => [
+				'name' => 'add_blog',
+				'value' => '0'
+			]],
+			['OgpConfig' => [
+				'name' => 'add_content',
+				'value' => '0'
+			]]
+		];
+		$OgpConfig->saveAll($first_data);
 	}
 
 	public $ogp_configs = array(
