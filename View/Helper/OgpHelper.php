@@ -48,11 +48,13 @@ class OgpHelper extends AppHelper {
 	}
 	
 	public function ogpInfo(){
-		$OgpConfig = ClassRegistry::init('OgpConfig');
-		$configs = $OgpConfig->find('all');
+		$OgpConfig = ClassRegistry::init('Ogp.OgpConfig');
 		$return = [];
-		foreach($configs as $config){
-			$return[$config['OgpConfig']['name']] = $config['OgpConfig']['value'];
+		if($OgpConfig->find('count') > 1){
+			$configs = $OgpConfig->find('all');
+			foreach($configs as $config){
+				$return[$config['OgpConfig']['name']] = $config['OgpConfig']['value'];
+			}
 		}
 		if(empty($return)){
 			$return = [
