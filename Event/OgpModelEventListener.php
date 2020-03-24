@@ -14,9 +14,13 @@ class OgpModelEventListener extends BcModelEventListener {
     public function blogBlogPostBeforeSave(CakeEvent $event) {
 	    $BlogPost = $event->subject();
 		$data = $BlogPost->data;
-	    $Ogp = ClassRegistry::init('Ogp.Ogp');
-		$Ogp->set($data['Ogp']);
-		return $Ogp->validates();
+	    if(!empty($data['Ogp'])){
+			$Ogp = ClassRegistry::init('Ogp.Ogp');
+			$Ogp->set($data['Ogp']);
+			return $Ogp->validates();
+		}else{
+			return true;
+		}
     }
     
     public function blogBlogPostAfterSave(CakeEvent $event) {
