@@ -8,7 +8,11 @@ class OgpControllerEventListener extends BcControllerEventListener {
 		
 	public function initialize(CakeEvent $event) {
 		$Controller = $event->subject();
-		$Controller->helpers[] = 'Ogp.Ogp';
+		$Plugin = ClassRegistry::init('Plugin');
+        $inOgp = $Plugin->findByName('Ogp');
+        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
+	        $Controller->helpers[] = 'Ogp.Ogp';
+        }
 	}
 	
 }

@@ -65,27 +65,37 @@ class OgpModelEventListener extends BcModelEventListener {
 	        $data['Ogp']['page_id'] = $data['Page']['id'];
 	        $Ogp = ClassRegistry::init('Ogp.Ogp');
 	        return $Ogp->save($data['Ogp']);
+        }else{
+	        return true;
         }
     }
     
     public function blogBlogPostBeforeFind(CakeEvent $event) {
         $BlogPost = $event->subject();
-        $BlogPost->bindModel(array('hasOne' => array(
-            'Ogp' => array(
-                'className' => 'Ogp.Ogp',
-                'foreignKey' => 'blog_post_id',
-            )
-        )), false);   
+        $Plugin = ClassRegistry::init('Plugin');
+        $inOgp = $Plugin->findByName('Ogp');
+        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
+	        $BlogPost->bindModel(array('hasOne' => array(
+	            'Ogp' => array(
+	                'className' => 'Ogp.Ogp',
+	                'foreignKey' => 'blog_post_id',
+	            )
+	        )), false);
+        }
     }
     
     public function pageBeforeFind(CakeEvent $event) {
         $Page = $event->subject();
-        $Page->bindModel(array('hasOne' => array(
-            'Ogp' => array(
-                'className' => 'Ogp.Ogp',
-                'foreignKey' => 'page_id',
-            )
-        )), false);   
+        $Plugin = ClassRegistry::init('Plugin');
+        $inOgp = $Plugin->findByName('Ogp');
+        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
+	        $Page->bindModel(array('hasOne' => array(
+	            'Ogp' => array(
+	                'className' => 'Ogp.Ogp',
+	                'foreignKey' => 'page_id',
+	            )
+	        )), false);
+        }
     }
     
 }
