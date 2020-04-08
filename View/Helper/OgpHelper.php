@@ -146,7 +146,7 @@ class OgpHelper extends AppHelper {
 			}
 		}
 		if(empty($description)){
-			$description = $page['description'];
+			$description = $this->BcBaser->getDescription();
 		}
 		if(empty($image_info['image_uri'])){
 			if(!empty($page['eyecatch'])){

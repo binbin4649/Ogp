@@ -1,4 +1,5 @@
 <?php
+App::uses('BcAuthComponent',  'Controller/Component');
 
 class OgpModelEventListener extends BcModelEventListener {
 	
@@ -71,30 +72,34 @@ class OgpModelEventListener extends BcModelEventListener {
     }
     
     public function blogBlogPostBeforeFind(CakeEvent $event) {
-        $BlogPost = $event->subject();
-        $Plugin = ClassRegistry::init('Plugin');
-        $inOgp = $Plugin->findByName('Ogp');
-        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
-	        $BlogPost->bindModel(array('hasOne' => array(
-	            'Ogp' => array(
-	                'className' => 'Ogp.Ogp',
-	                'foreignKey' => 'blog_post_id',
-	            )
-	        )), false);
-        }
+	    if(BcAuthComponent::user()){
+		    $BlogPost = $event->subject();
+	        $Plugin = ClassRegistry::init('Plugin');
+	        $inOgp = $Plugin->findByName('Ogp');
+	        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
+		        $BlogPost->bindModel(array('hasOne' => array(
+		            'Ogp' => array(
+		                'className' => 'Ogp.Ogp',
+		                'foreignKey' => 'blog_post_id',
+		            )
+		        )), false);
+	        }
+	    }
     }
     
     public function pageBeforeFind(CakeEvent $event) {
-        $Page = $event->subject();
-        $Plugin = ClassRegistry::init('Plugin');
-        $inOgp = $Plugin->findByName('Ogp');
-        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
-	        $Page->bindModel(array('hasOne' => array(
-	            'Ogp' => array(
-	                'className' => 'Ogp.Ogp',
-	                'foreignKey' => 'page_id',
-	            )
-	        )), false);
+        if(BcAuthComponent::user()){
+	        $Page = $event->subject();
+	        $Plugin = ClassRegistry::init('Plugin');
+	        $inOgp = $Plugin->findByName('Ogp');
+	        if(!empty($inOgp) && $inOgp['Plugin']['status'] === true){
+		        $Page->bindModel(array('hasOne' => array(
+		            'Ogp' => array(
+		                'className' => 'Ogp.Ogp',
+		                'foreignKey' => 'page_id',
+		            )
+		        )), false);
+	        }
         }
     }
     
