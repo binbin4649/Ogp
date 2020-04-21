@@ -99,10 +99,12 @@ class OgpHelper extends AppHelper {
 			$image_info = $this->ogpImageInfoFullUrl($current_ogp['Ogp']['image']);
 		}
 		if(empty($title)){
-			$title = $this->Blog->getPostTitle($post, false).' | '.$siteName;
+			//$title = $this->Blog->getPostTitle($post, false).' | '.$siteName;
+			$title = $this->BcBaser->getTitle();
 		}
 		if(empty($description)){
-			$description = $this->Blog->getTitle() . '｜' . $this->Blog->getPostContent($post, true, false, 50);
+			//$description = $this->Blog->getTitle() . '｜' . $this->Blog->getPostContent($post, true, false, 50);
+			$description = $this->BcBaser->getDescription();
 		}
 		if(empty($image_info['image_uri'])){
 			if(!empty($post['BlogPost']['eye_catch'])){
@@ -139,11 +141,14 @@ class OgpHelper extends AppHelper {
 			$image_info = $this->ogpImageInfoFullUrl($current_ogp['Ogp']['image']);
 		}
 		if(empty($title)){
+/*
 			if($this->BcBaser->isHome()){
 				$title = $siteName;
 			}else{
 				$title = $page['title'].' | '.$siteName;
 			}
+*/
+			$title = $this->BcBaser->getTitle();
 		}
 		if(empty($description)){
 			$description = $this->BcBaser->getDescription();
