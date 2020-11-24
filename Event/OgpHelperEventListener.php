@@ -9,9 +9,18 @@ class OgpHelperEventListener extends BcHelperEventListener {
 	public function formAfterForm(CakeEvent $event) {
 		$View = $event->subject();
 		$OgpConfig = ClassRegistry::init('OgpConfig');
-		$add_blog = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_blog']])['OgpConfig']['value'];
-		$add_content = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_content']])['OgpConfig']['value'];
-		
+		$addBlog = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_blog']]);
+		if($addBlog){
+			$add_blog = $addBlog['OgpConfig']['value'];
+		}else{
+			$add_blog = null;
+		}
+		$addContent = $OgpConfig->find('first', ['conditions'=>['OgpConfig.name'=>'add_content']]);
+		if($addContent){
+			$add_content = $addContent['OgpConfig']['value'];
+		}else{
+			$add_content = null;
+		}
 		$add_title = [
 			'title' => 'OGPタイトル',
 			'input' => 
