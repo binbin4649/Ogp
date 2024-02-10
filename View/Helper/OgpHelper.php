@@ -80,7 +80,7 @@ class OgpHelper extends AppHelper {
 		}
 		// それでもなければロゴ出す
 		if(!$image_info['image_uri']){
-			$uri = $this->BcBaser->getThemeUrl().'img/logo.png';
+			$uri = $this->BcBaser->getThemeUrl().'img/screen-image.png';
 			$image_info = $this->ogpImageInfo($uri);
 		}
 		return $image_info;
